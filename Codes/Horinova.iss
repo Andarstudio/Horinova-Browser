@@ -35,7 +35,7 @@ PrivilegesRequired=admin
 DisableWelcomePage=no
 
 ; 3. Privacy policy page (uses the license page)
-LicenseFile=privacy-policy.txt
+LicenseFile=pp.txt
 
 ; 4. Install location page
 DisableDirPage=no
