@@ -1,10 +1,10 @@
-; Horinova installer - build with Inno Setup 6 (iscc installer\Horinova.iss)
-; Expects the published app in ..\publish (dotnet publish ... -o publish)
+; Horinova installer - build with Inno Setup 6 (iscc Horinova.iss)
+; This file sits next to Horinova.csproj. Expects the published app in .\publish
 
 #define MyAppName "Horinova"
 #define MyAppVersion "1.0.0"
 #define MyAppExeName "Horinova.exe"
-#define MyAppPublisher "Andar Studio LLC)
+#define MyAppPublisher "Andar Studio LLC"
 
 [Setup]
 AppId={{90134EA4-9B3B-4FF0-8126-6A171C67D83A}
@@ -16,12 +16,12 @@ DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 UninstallDisplayIcon={app}\{#MyAppExeName}
-SetupIconFile=..\Assets\horinova.ico
-OutputDir=..\installer-output
+SetupIconFile=Assets\horinova.ico
+OutputDir=installer-output
 OutputBaseFilename=Horinova-Setup
 WizardStyle=modern
-WizardImageFile=..\Assets\horinova.bmp
-WizardSmallImageFile=..\Assets\horinova.bmp
+WizardImageFile=Assets\wizard-large.bmp
+WizardSmallImageFile=Assets\wizard-small.bmp
 Compression=lzma2
 SolidCompression=yes
 ArchitecturesAllowed=x64compatible
@@ -35,7 +35,7 @@ PrivilegesRequired=admin
 DisableWelcomePage=no
 
 ; 3. Privacy policy page (uses the license page)
-LicenseFile=pp.txt
+LicenseFile=privacy-policy.txt
 
 ; 4. Install location page
 DisableDirPage=no
@@ -67,7 +67,7 @@ FinishedLabel=[name] has been installed on your computer. You can start it by se
 Name: "desktopicon"; Description: "Create a &desktop shortcut"; GroupDescription: "Additional shortcuts:"
 
 [Files]
-Source: "..\publish\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs ignoreversion
+Source: "publish\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
