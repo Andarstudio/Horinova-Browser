@@ -1,0 +1,78 @@
+HORINOVA PRIVACY POLICY
+
+Effective date: October 15, 2026
+Developer: [YOUR NAME OR COMPANY]
+Contact: [YOUR EMAIL ADDRESS]
+
+This Privacy Policy explains what information Horinova ("the Browser") stores and uses. Please read it before installing. By selecting "I accept" you confirm that you have read and understood it.
+
+
+1. SUMMARY
+
+ - Horinova does not collect your personal information and has no analytics or telemetry.
+ - Your history, passwords and settings stay on your computer. They are never sent to the developer.
+ - The Browser connects to the websites you choose to visit, and to the services described in section 5.
+
+
+2. DATA STORED ON YOUR COMPUTER
+
+Horinova stores the following in your Windows user profile (%AppData%\Horinova) and your Downloads folder:
+
+ a) Browsing history: page titles, web addresses and visit times, from normal tabs only. Private tabs are never added to history.
+ b) Saved passwords: only the passwords you add yourself in Settings. They are encrypted with Windows Data Protection (DPAPI) and tied to your Windows user account.
+ c) Browser data created by the Chromium engine: cache, cookies and site data.
+ d) Downloads: files you download are saved to your Windows Downloads folder. The downloads list shown in the Browser is kept only while the Browser is open.
+ e) Settings, such as whether ad and tracker blocking are turned on.
+
+
+3. PRIVATE TABS
+
+Private tabs keep cookies, cache and site data in memory only. This data is discarded when you close Horinova, and the pages you visit are not added to history. Files you download in a private tab are still saved to your Downloads folder.
+
+Private tabs do not hide your activity from the websites you visit, your employer or school, your network administrator, or your internet provider.
+
+
+4. DATA WE COLLECT
+
+We do not collect, sell, rent or share your personal information. Horinova contains no advertising, analytics or tracking code, and the developer does not receive your browsing history, passwords or downloads.
+
+
+5. NETWORK CONNECTIONS
+
+ a) Websites. When you open a website, that website and the networks between you and it can see your IP address and standard browser information. Their handling of your data is governed by their own privacy policies.
+ b) Search and start page. The default start page and search are provided by Google. Text you type in the address bar that is not a web address is sent to Google as a search query. Google's privacy policy applies to that data.
+ c) Update check. When you choose "Check for updates" in Settings, Horinova requests a small version file from the update address configured in the Browser. The server hosting that file (for example GitHub) can see your IP address. No other personal data is sent.
+ d) Chromium engine. Horinova is built on the Chromium engine through CefSharp. The engine may make technical network requests needed to load and display web pages.
+
+
+6. AD AND TRACKER BLOCKING
+
+Horinova blocks requests to domains on built-in ad and tracker lists. Matching happens on your computer, and the lists are not sent anywhere. Blocking may stop some websites from working correctly. You can turn it off in Settings. The Browser shows the number of blocked requests in the toolbar.
+
+
+7. SECURITY
+
+Saved passwords are encrypted with Windows DPAPI, which protects them from other Windows users and from copies of the file on other computers. They are not protected from someone who is signed in to your Windows account, or from malware running under your account. Horinova does not currently use a master password. Keep Windows and the Browser up to date, and do not save passwords you cannot afford to expose.
+
+
+8. YOUR CONTROL
+
+ - Delete browsing history: History window, or Settings > Security > Clear browsing history.
+ - Delete saved passwords: Settings > Security > Passwords > Delete.
+ - Remove downloaded files: delete them from your Downloads folder.
+ - Remove all local data: uninstall Horinova and delete the %AppData%\Horinova folder.
+
+
+9. CHILDREN
+
+Horinova is a general-purpose browser and is not directed at children. We do not knowingly collect information from anyone, including children.
+
+
+10. CHANGES TO THIS POLICY
+
+We may update this policy in future versions. The version shown during installation applies to the version of Horinova you are installing. The effective date at the top shows when it was last changed.
+
+
+11. CONTACT
+
+Questions about this policy: [YOUR EMAIL ADDRESS]
