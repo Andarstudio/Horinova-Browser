@@ -1,0 +1,22 @@
+<Window Icon="pack://application:,,,/Assets/horinova.ico"
+        x:Class="Horinova.HistoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="History" Width="720" Height="520" WindowStartupLocation="CenterOwner">
+  <DockPanel Margin="8">
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,6">
+      <TextBox x:Name="SearchBox" Width="300" Padding="4" TextChanged="Search_Changed" ToolTip="Search history"/>
+      <Button Content="Delete selected" Margin="8,0,0,0" Padding="8,2" Click="Delete_Click"/>
+      <Button Content="Clear all" Margin="6,0,0,0" Padding="8,2" Click="Clear_Click"/>
+    </StackPanel>
+    <ListView x:Name="List" MouseDoubleClick="List_DoubleClick">
+      <ListView.View>
+        <GridView>
+          <GridViewColumn Header="Time" Width="130" DisplayMemberBinding="{Binding TimeText}"/>
+          <GridViewColumn Header="Title" Width="250" DisplayMemberBinding="{Binding Title}"/>
+          <GridViewColumn Header="Address" Width="300" DisplayMemberBinding="{Binding Url}"/>
+        </GridView>
+      </ListView.View>
+    </ListView>
+  </DockPanel>
+</Window>

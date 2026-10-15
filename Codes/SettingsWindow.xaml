@@ -1,0 +1,47 @@
+<Window Icon="pack://application:,,,/Assets/horinova.ico"
+        x:Class="Horinova.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Horinova Settings" Width="620" Height="600" WindowStartupLocation="CenterOwner">
+  <TabControl Margin="8">
+    <TabItem Header="Security">
+      <StackPanel Margin="12">
+        <TextBlock Text="Browser version" FontWeight="Bold" FontSize="15"/>
+        <TextBlock x:Name="UpdateText" Text="Not checked yet" Margin="0,4,0,4"/>
+        <Button Content="Check for updates" Width="150" HorizontalAlignment="Left" Click="CheckUpdate_Click"/>
+
+        <TextBlock Text="Blocking" FontWeight="Bold" FontSize="15" Margin="0,16,0,4"/>
+        <CheckBox x:Name="AdsCheck" Content="Block ads" Checked="Block_Changed" Unchecked="Block_Changed"/>
+        <CheckBox x:Name="TrackersCheck" Content="Block trackers" Margin="0,4,0,0" Checked="Block_Changed" Unchecked="Block_Changed"/>
+
+        <TextBlock Text="History" FontWeight="Bold" FontSize="15" Margin="0,16,0,4"/>
+        <Button Content="Clear browsing history" Width="170" HorizontalAlignment="Left" Click="ClearHistory_Click"/>
+
+        <TextBlock Text="Passwords" FontWeight="Bold" FontSize="15" Margin="0,16,0,4"/>
+        <ListView x:Name="PwList" Height="90" DisplayMemberPath="Site"/>
+        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+          <Button Content="Show password" Click="Reveal_Click" Margin="0,0,6,0"/>
+          <Button Content="Delete" Click="Delete_Click"/>
+        </StackPanel>
+        <Grid Margin="0,8,0,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <TextBox x:Name="SiteBox" Grid.Column="0" Margin="0,0,4,0" ToolTip="Site"/>
+          <TextBox x:Name="UserBox" Grid.Column="1" Margin="0,0,4,0" ToolTip="Username"/>
+          <PasswordBox x:Name="PassBox" Grid.Column="2" Margin="0,0,4,0"/>
+          <Button Grid.Column="3" Content="Add" Width="50" Click="Add_Click"/>
+        </Grid>
+        <TextBlock Text="Site / Username / Password. Stored encrypted with Windows DPAPI." Foreground="Gray" FontSize="11" Margin="0,4,0,0"/>
+      </StackPanel>
+    </TabItem>
+    <TabItem Header="About Horinova">
+      <StackPanel Margin="20">
+        <TextBlock Text="Horinova" FontSize="28" FontWeight="Bold"/>
+        <TextBlock x:Name="VerText" Margin="0,8,0,0"/>
+        <TextBlock x:Name="ChromiumText" Margin="0,4,0,0"/>
+        <TextBlock Text="A fast browser with built-in ad and tracker blocking, powered by Chromium." TextWrapping="Wrap" Margin="0,12,0,0"/>
+      </StackPanel>
+    </TabItem>
+  </TabControl>
+</Window>
