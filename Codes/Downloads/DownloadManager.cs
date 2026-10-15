@@ -67,7 +67,7 @@ namespace Horinova
     {
         public bool CanDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, string url, string requestMethod) => true;
 
-        public bool OnBeforeDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem item, IBeforeDownloadCallback callback)
+        public void OnBeforeDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem item, IBeforeDownloadCallback callback)
         {
             if (!callback.IsDisposed)
             {
@@ -85,7 +85,6 @@ namespace Horinova
                     callback.Continue(path, showDialog: false);
                 }
             }
-            return true;
         }
 
         public void OnDownloadUpdated(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem item, IDownloadItemCallback callback)
