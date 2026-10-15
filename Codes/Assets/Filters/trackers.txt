@@ -1,0 +1,10 @@
+google-analytics.com
+googletagmanager.com
+facebook.net
+connect.facebook.net
+hotjar.com
+scorecardresearch.com
+quantserve.com
+mixpanel.com
+segment.io
+amplitude.com
