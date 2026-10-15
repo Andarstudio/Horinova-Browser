@@ -33,7 +33,7 @@ jobs:
         run: choco install innosetup -y --no-progress
 
       - name: Build installer
-        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" Codes\installer\Horinova.iss'
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" Codes\Horinova.iss'
 
       - name: Upload installer
         uses: actions/upload-artifact@v4
