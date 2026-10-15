@@ -1,0 +1,66 @@
+name: Build Horinova
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed only to publish a GitHub Release on tags
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore Codes/Horinova.csproj -r win-x64
+
+      - name: Publish app (self-contained, win-x64)
+        run: dotnet publish Codes/Horinova.csproj -c Release -r win-x64 --self-contained true --no-restore -o Codes/publish
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup -y --no-progress
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $iscc = (Get-Command iscc -ErrorAction SilentlyContinue).Source
+          if (-not $iscc) {
+            $iscc = Get-ChildItem "C:\Program Files*\Inno Setup*\ISCC.exe" -ErrorAction SilentlyContinue |
+                    Select-Object -First 1 -ExpandProperty FullName
+          }
+          if (-not $iscc) { throw "ISCC.exe not found" }
+          Write-Host "Using $iscc"
+          & $iscc "Codes\Horinova.iss"
+          if ($LASTEXITCODE -ne 0) { throw "ISCC failed with exit code $LASTEXITCODE" }
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: Horinova-Setup
+          path: Codes/installer-output/Horinova-Setup.exe
+
+      - name: Upload portable build
+        uses: actions/upload-artifact@v4
+        with:
+          name: Horinova-win-x64
+          path: Codes/publish
+
+      # Runs only when you push a tag like v1.0.0
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Codes/installer-output/Horinova-Setup.exe
