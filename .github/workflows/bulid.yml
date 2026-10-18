@@ -1,0 +1,74 @@
+name: Build Horinova from uploaded ZIP
+
+on:
+  push:
+    branches: [main, master]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-linux-x64:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Check out repository (includes the ZIP)
+        uses: actions/checkout@v4
+
+      - name: Extract Horinova source ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZIP_FILE="Horinova-Arch-Pacman-Ready.zip"
+          test -f "$ZIP_FILE" || {
+            echo "Could not find $ZIP_FILE in the repository root."
+            echo "Upload the ZIP to the top level of the GitHub repository with this exact filename."
+            exit 1
+          }
+          mkdir -p extracted
+          unzip -q "$ZIP_FILE" -d extracted
+          PROJECT_FILE="$(find extracted -type f -name 'Horinova.Arch.csproj' -print -quit)"
+          test -n "$PROJECT_FILE" || {
+            echo "Could not find Horinova.Arch.csproj inside the ZIP."
+            exit 1
+          }
+          echo "PROJECT_FILE=$PROJECT_FILE" >> "$GITHUB_ENV"
+          echo "PROJECT_DIR=$(dirname "$PROJECT_FILE")" >> "$GITHUB_ENV"
+          echo "Found project: $PROJECT_FILE"
+
+      - name: Install Linux native dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y             libgtk-3-dev             libwebkit2gtk-4.1-dev             libsoup-3.0-dev             libayatana-appindicator3-dev             zstd
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore "$PROJECT_FILE" --runtime linux-x64
+
+      - name: Publish Linux x64 build
+        run: |
+          dotnet publish "$PROJECT_FILE"             --configuration Release             --runtime linux-x64             --self-contained true             --no-restore             --output "$GITHUB_WORKSPACE/publish/linux-x64"
+
+      - name: Create downloadable archive
+        run: |
+          tar -czf "$GITHUB_WORKSPACE/Horinova-linux-x64.tar.gz"             -C "$GITHUB_WORKSPACE/publish/linux-x64" .
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Horinova-linux-x64
+          path: Horinova-linux-x64.tar.gz
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Attach build to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Horinova-linux-x64.tar.gz
