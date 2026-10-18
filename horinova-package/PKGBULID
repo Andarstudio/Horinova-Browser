@@ -1,0 +1,67 @@
+pkgname=horinova
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Horinova web browser"
+arch=('x86_64')
+url="https://github.com/andarstudio/Horinova-Browser"
+license=('custom')
+depends=('glibc' 'gcc-libs' 'gtk3' 'webkit2gtk-4.1')
+source=('Horinova-linux-x64.tar.gz')
+noextract=('Horinova-linux-x64.tar.gz')
+sha256sums=('SKIP')
+
+package() {
+    local appdir="$srcdir/horinova-app"
+    local target="$pkgdir/opt/horinova"
+
+    mkdir -p "$appdir" "$target"
+    mkdir -p "$pkgdir/usr/bin"
+    mkdir -p "$pkgdir/usr/share/applications"
+    mkdir -p "$pkgdir/usr/share/licenses/$pkgname"
+
+    tar -xzf "$srcdir/Horinova-linux-x64.tar.gz" -C "$appdir"
+
+    # Copy the extracted application into /opt/horinova
+    shopt -s dotglob nullglob
+    local entries=("$appdir"/*)
+
+    if (( ${#entries[@]} == 1 )) && [[ -d "${entries[0]}" ]]; then
+        cp -a "${entries[0]}"/. "$target"/
+    else
+        cp -a "$appdir"/. "$target"/
+    fi
+
+    shopt -u dotglob nullglob
+
+    # Create the Horinova launcher
+    cat > "$pkgdir/usr/bin/horinova" <<'EOF'
+#!/usr/bin/env bash
+set -e
+cd /opt/horinova
+
+if [[ -x /opt/horinova/Horinova.Arch ]]; then
+    exec /opt/horinova/Horinova.Arch "$@"
+elif [[ -f /opt/horinova/Horinova.Arch.dll ]]; then
+    exec dotnet /opt/horinova/Horinova.Arch.dll "$@"
+else
+    echo "Horinova executable was not found in /opt/horinova." >&2
+    exit 1
+fi
+EOF
+
+    chmod 755 "$pkgdir/usr/bin/horinova"
+
+    # Add an application menu entry
+    cat > "$pkgdir/usr/share/applications/horinova.desktop" <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=Horinova
+Comment=Horinova web browser
+Exec=horinova
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+
+    echo "Horinova license information is available in the project repository." \
+        > "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  }
